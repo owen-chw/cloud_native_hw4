@@ -19,8 +19,9 @@ jobs:
 
     - name: setup Docker Buildx
       uses: docker/setup-buildx-action@v3
-    - name: Check DockerHub Username
-      run: echo "Username is ${{ secrets.DOCKERHUB_USERNAME }}"
+      
+    - name: set tag as timestamp
+      run: echo "IMAGE_TAG=$(date +'%Y%m%d-%H%M%S')" >> $GITHUB_ENV
 
 
     - name: login Dockerhub
@@ -35,5 +36,5 @@ jobs:
          context: .
          file: ./Dockerfile
          push: true
-         tags: owen2chw/2025cloud:$(date +'%Y%m%d-%H%M%S')
+         tags: owen2chw/2025cloud:${{ env.IMAGE_TAG }}
         
